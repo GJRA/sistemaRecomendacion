@@ -52,5 +52,4 @@ int error(int num1, float num2);
 void entrenar(float *matrizTarget, float *matrizReferencia, int rating );
 
 
-
 #endif
