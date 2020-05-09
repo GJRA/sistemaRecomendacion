@@ -42,4 +42,25 @@ void imprimirPeliculasParecidas(char *nombre_peli);
  */
 void imprimirRatingPeliculasUsuario(char *nombre_usuario);
 
+/**
+ * Imprime los features de una pelicula y sus porcentajes
+ *
+ * @param nombre_pelicula nombre de la pelicula para su features
+ */
+void imprimirFeaturesPelicula(char *nombre_pelicula);
+
+/**
+ * Imprime los ratings de todos los usuarios por pelicula
+ *
+ * @param nombre_pelicula nombre de la pelicula para ver sus ratings
+ */
+void imprimirRatingPeliculasUsuario(char *nombre_pelicula);
+
+/**
+ * Imprime peliculas y el rating de un usuario
+ *
+ * @param nombre_usuario nombre del usuario a buscar peliculas y su rating
+ */
+void imprimirRatingPeliculasUsuario(char *nombre_usuario);
+
 #endif
