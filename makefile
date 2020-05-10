@@ -1,19 +1,30 @@
-program: vista.o controlador.o modelo.o main.o
-  gcc  -g -o program vista.o controlador.o modelo.o main.o
+# Makefile
 
-vista.o: vista.c vista.h estructuras.h
-  gcc -c vista.c
+# Compiler flags
+CFLAGS = -Wall -g
 
-controlador.o: controlador.c controlador.h estructuras.h
-	gcc -c controlador.c
+# External libraries
+LIBS =
 
-modelo.o: modelo.c modelo.h estructuras.h
-	gcc -c modelo.c
+# Pre-defined macros for conditional compilation
+DEFS =
 
-main.o: main.c modelo.h vista.h estructuras.h
-	gcc -c main.c
+# The final executable program file
+BIN = main
+
+# Object files from which $BIN depends
+OBJS = modelo.o vista.o
+
+# This default rule compiles the executable program
+$(BIN): $(OBJS) $(BIN).c
+	$(CC) $(CFLAGS) $(DEFS) $(OBJS) $(BIN).c $(LIBS) -o $(BIN).out
+
+# This rule compiles each module into its object file
+%.o: %.c %.h
+	$(CC) -c $(CFLAGS) $(DEFS) $< -o $@
 
 clean:
-	del *.o
-	echo "Clean done"
- 
+	rm -f *~ *.o
+
+depend:
+	makedepend -Y -- $(CFLAGS) $(DEFS) -- *.c
