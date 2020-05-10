@@ -1,6 +1,12 @@
 #ifndef MODELO_H
 #define MODELO_H
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+#include <time.h>
+#include "estructuras.h"
 
 // -----------------------------
 // Public interface
@@ -51,5 +57,14 @@ int error(int num1, float num2);
  */
 void entrenar(float *matrizTarget, float *matrizReferencia, int rating );
 
+Nodo * agregarALista(Nodo * head, Nodo * elemento, tipoDeNodo tipo);
+
+Calificacion * agregarCalificacion(Calificacion * head, Calificacion * elemento);
+
+void * getLast(void * head, tipoDeNodo tipo);
+
+int checkInList(Nodo * head, Nodo * elemento);
+
+Calificacion * getCalificacion(Calificacion * head, Calificacion * elemento);
 
 #endif
