@@ -2,25 +2,25 @@
 #define ESTRUCTURAS_H
 
 /* Types declarations */
-typedef struct Pu{
+typedef struct Pu {
     int idPu;
     char nombre_usuario[20];
     float feature_values[17];
-    Pu_t *next;
+    struct Pu *next;
 }Pu_t;
 
 typedef struct Qi{
     int idQi;
-    char nombre_pelicula[20];
+    char nombre_pelicula[40];
     float feature_values[17];
-    Qi_t *next;
+    struct Qi *next;
 }Qi_t;
 
 typedef struct Calificacion{
     Qi_t *usuario;
     Pu_t *pelicula;
     int rating;
-    Calificacion_t *next;
+    struct Calificacion *next;
 }Calificacion_t;
 
 #endif

@@ -4,5 +4,6 @@
 #include "modelo.h"
 
 int main(void) {
-    
+    leerCSV("base.csv");
+    return 0;
 }
