@@ -1,65 +1,70 @@
 #include "modelo.h"
 /* Private types */
-// static void generarRand(float **valores[17]){
-//     //float valores[17];
-//     float val[17];
-//     srand((unsigned int)time(NULL));
-//     for(int i = 0; i < 17; i++){
-//         val[i] = (float)rand()/(float)(RAND_MAX/1);
-//     }
-//     strcpy(valores,val);
-// }
+static void generarRand(float **valores[17]){
+    //float valores[17];
+    float val[17];
+    srand((unsigned int)time(NULL));
+    for(int i = 0; i < 17; i++){
+        val[i] = (float)rand()/(float)(RAND_MAX/1);
+    }
+    strcpy(valores,val);
+}
 
 
-// void leerCSV(char *nomFile){
-// 	FILE *file;
-// 	file = fopen(nomFile, "r");
-//
-// 	int i = 0;
-//     char line[4098];
-//     srand((unsigned int)time(NULL));
-//     while (fgets(line, 4098, file))
-//     {
-//         int j = 0;
-//         const char* tmp = strdup(line);
-//         char delimitador[] = ",";
-//         char *token = strtok(tmp, delimitador);
-//         if(token != NULL){
-//             while(token != NULL){
-//                 if(i==0){
-//                     if(j!=0){
-//                         Pu_t *elemPu = malloc (sizeof (Pu_t));
-//                         elemPu -> idPu = j-1;
-//                         strcpy(elemPu -> nombre_usuario,token);
-//                         generarRand(&elemPu->feature_values);
-//                         //Primer renglon con usuarios
-//                         printf("Nombres: ");
-//                         printf("%s\t",token);
-//                     }
-//                 }else{
-//                     if(j == 0){
-//                         Qi_t *elemQi = malloc (sizeof (Qi_t));
-//                         elemQi -> idQi = i-1;
-//                         strcpy(elemQi -> nombre_pelicula,token);
-//                         generarRand(&elemQi->feature_values);
-//                         printf("Peli %s\t",token );
-//                     }else{
-//                         Calificacion_t *elemCali = malloc (sizeof (Calificacion_t));
-//                         //elemCali -> usuario = elemPu;
-//                         //elemCali -> pelicula = elemQi;
-//                         elemCali -> rating = atoi(token);
-//                         printf("%s\t",token);
-//                     }
-//
-//                 }
-//                 j++;
-//                 token = strtok(NULL, delimitador);
-//             }
-//         }
-//         free(tmp);
-//         i++;
-//     }
-// }
+void leerCSV(char *nomFile, Nodo **headPeliculas, Nodo **headUsuarios, Calificacion **headCalificacion){
+	FILE *file;
+	file = fopen(nomFile, "r");
+  Nodo *elemPu = NULL;
+  Nodo *elemQi = NULL;
+
+	int i = 0;
+    char line[4098];
+    srand((unsigned int)time(NULL));
+    while (fgets(line, 4098, file))
+    {
+        int j = 0;
+        const char* tmp = strdup(line);
+        char delimitador[] = ",";
+        char *token = strtok(tmp, delimitador);
+        if(token != NULL){
+            while(token != NULL){
+                if(i==0){
+                    if(j!=0){
+                        elemPu = malloc (sizeof (Nodo));
+                        elemPu -> id = j-1;
+                        strcpy(elemPu -> nombre,token);
+                        generarRand(&elemPu->feature_values);
+                        //Primer renglon con usuarios
+                        // printf("Nombres: ");
+                        // printf("%s\t",token);
+                        *headUsuarios = agregarALista(*headUsuarios, elemPu, USUARIO);
+                    }
+                }else{
+                    if(j == 0){
+                        elemQi = malloc (sizeof (Nodo));
+                        elemQi -> id = i-1;
+                        strcpy(elemQi -> nombre,token);
+                        generarRand(&elemQi->feature_values);
+                        // printf("Peli %s\t",token );
+                        *headPeliculas = agregarALista(*headPeliculas, elemQi, PELICULA);
+                    }else{
+                        Calificacion *elemCali = malloc (sizeof (Calificacion));
+                        elemCali -> usuario = elemPu;
+                        elemCali -> pelicula = elemQi;
+                        elemCali -> rating = atoi(token);
+                        // printf("%s\t",token);
+                        *headCalificacion = agregarCalificacion(*headCalificacion, elemCali);
+                    }
+
+                }
+                j++;
+                token = strtok(NULL, delimitador);
+            }
+        }
+        free(tmp);
+        i++;
+    }
+}
 
 Nodo * agregarALista(Nodo * head, Nodo * elemento, tipoDeNodo tipo) {
   Nodo * current = head;
@@ -99,7 +104,7 @@ void * getLast(void * head, tipoDeNodo tipo) {
     return current;
   } else {
     Calificacion * current = (Calificacion *)head;
-    while(current->next != NULL) current = current->next; 
+    while(current->next != NULL) current = current->next;
     return current;
   }
 }
