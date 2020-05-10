@@ -10,7 +10,7 @@
 // }Pu_t;
 //
 // typedef struct Qi{
-//     int idQi;
+//     int idQi; 
 //     char nombre_pelicula[40];
 //     float feature_values[17];
 //     struct Qi *next;

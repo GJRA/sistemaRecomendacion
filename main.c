@@ -11,11 +11,11 @@ int main(void) {
     printf("%p\n", peliculas);
     Nodo *temp = (Nodo *)malloc (sizeof (Nodo));
     if(temp == NULL) printf("ERROR\n");
-    temp->id = 1;
+    temp->id = 1; 
     strcpy(temp->nombre,"Simon");
     // temp->feature_values = generarRand();
     usuarios = agregarALista(usuarios, temp, USUARIO);
-    
+
     printf("%p\n", usuarios);
     printf("%p\n", peliculas);
     temp = (Nodo *)malloc (sizeof (Nodo));

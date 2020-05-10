@@ -46,7 +46,7 @@ float productoPunto(float *matriz, float *matriz2);
  * @param num2 Rating Calculado
  * @return el resultado resta
  */
-int error(int num1, float num2);
+int error(int num1, float num2); 
 
 /**
  * Operacion para obtener rating calculado

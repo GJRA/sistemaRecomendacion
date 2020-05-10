@@ -99,7 +99,7 @@ void * getLast(void * head, tipoDeNodo tipo) {
     return current;
   } else {
     Calificacion * current = (Calificacion *)head;
-    while(current->next != NULL) current = current->next;
+    while(current->next != NULL) current = current->next; 
     return current;
   }
 }

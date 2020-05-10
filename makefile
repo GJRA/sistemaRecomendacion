@@ -16,3 +16,4 @@ main.o: main.c modelo.h vista.h estructuras.h
 clean:
 	del *.o
 	echo "Clean done"
+ 

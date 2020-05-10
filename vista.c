@@ -1,6 +1,6 @@
 #include "vista.h"
 
-void printLista(void *head, tipoDeNodo tipo) {
+void printLista(void *head, tipoDeNodo tipo) { 
   if(tipo == CALIFICACION) {
     Calificacion * current = (Calificacion *)head;
     while(current != NULL) {
