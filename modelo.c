@@ -19,7 +19,8 @@ static void generarRand(float **valores[17]){
 void leerCSV(char *nomFile){
 	FILE *file;
 	file = fopen(nomFile, "r");
-
+    Pu_t *elemPu=NULL;
+    Qi_t *elemQi=NULL;
 	int i = 0;
     char line[4098];
     srand((unsigned int)time(NULL));
@@ -33,7 +34,7 @@ void leerCSV(char *nomFile){
             while(token != NULL){
                 if(i==0){
                     if(j!=0){
-                        Pu_t *elemPu = malloc (sizeof (Pu_t));
+                        elemPu = malloc (sizeof (Pu_t));
                         elemPu -> idPu = j-1;
                         strcpy(elemPu -> nombre_usuario,token);
                         generarRand(&elemPu->feature_values);
@@ -43,17 +44,19 @@ void leerCSV(char *nomFile){
                     }
                 }else{
                     if(j == 0){
-                        Qi_t *elemQi = malloc (sizeof (Qi_t));
+                        elemQi = malloc (sizeof (Qi_t));
                         elemQi -> idQi = i-1;
                         strcpy(elemQi -> nombre_pelicula,token);
                         generarRand(&elemQi->feature_values);
                         printf("Peli %s\t",token );
                     }else{
+                        if(atoi(token)>= 0){
                         Calificacion_t *elemCali = malloc (sizeof (Calificacion_t));
-                        //elemCali -> usuario = elemPu;
-                        //elemCali -> pelicula = elemQi;
+                        elemCali -> usuario = elemPu;
+                        elemCali -> pelicula = elemQi;
                         elemCali -> rating = atoi(token);
                         printf("%s\t",token);
+                        }
                     }
                     
                 }
