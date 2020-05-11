@@ -79,7 +79,7 @@ int main(void) {
     printf("USUARIOS: %d\n", getListLength(usuarios, USUARIO));
     printf("PELICULAS: %d\n", getListLength(peliculas, PELICULA));
     printf("CALIFICACIONES: %d\n", getListLength(calificaciones, CALIFICACION));
-    char ch;
+    /*char ch;
     scanf(" %c", &ch);
 
     agregarUsuario("Prueba", usuarios, &calificaciones, peliculas);
@@ -95,7 +95,8 @@ int main(void) {
     printf("PELICULAS\n");
     printLista(peliculas, PELICULA);
     printf("CALIFICACIONES\n");
-    printLista(calificaciones, CALIFICACION);
+    printLista(calificaciones, CALIFICACION);*/
+    rms(usuarios,peliculas,calificaciones);
 
     return 0;
 }

@@ -208,3 +208,47 @@ Calificacion * calificaPelicula(Nodo * usuario, Nodo * pelicula, int rating, Cal
   // printf("%s\t",token);
   return agregarCalificacion(calificaciones, elemCali);
 }
+
+float productoPunto(float *matriz , float *matriz2){
+    float sum= 0.0;
+    for(int i = 0; i <17;i++){
+        sum=sum+matriz[i]*matriz2[i];
+    }
+    return sum;
+}
+
+float error(float num1, float num2){
+    return (num1-num2);
+}
+
+float rms(Nodo *headUsuarios, Nodo *headPeliculas, Calificacion *headCalificacion){
+    float rm=0.0,sum=0.0,cont=1.0;
+    Calificacion * currentC = headCalificacion;
+    Nodo *currentP = headPeliculas;
+    Nodo *currentU = headUsuarios;
+    while(currentC != NULL){
+      while(currentP != NULL){
+        while (currentU != NULL){
+          Calificacion *elem= malloc (sizeof (Calificacion));
+          elem -> usuario = currentU;
+          elem -> pelicula = currentP;
+          currentU = currentU->next;
+          if(getCalificacion(currentC,elem)!=NULL){
+            rm=productoPunto(currentP->feature_values,currentU->feature_values);
+            sum=sum+pow(error(currentC->rating,rm),2);
+            cont=0;
+            currentU = currentU -> next;
+          }else{
+            currentU = currentU ->next;
+          }
+        }
+        currentU = headUsuarios;
+        currentP = currentP->next;
+      }
+        currentC = currentC->next;
+        cont++;
+    }
+    rm=sqrt(sum/cont);
+    printf("El rms del 1er epoch es: %f\n",rm);
+    return rm;
+}

@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <time.h>
+#include <math.h>
 #include "estructuras.h"
 
 // -----------------------------
@@ -46,7 +47,7 @@ float productoPunto(float *matriz, float *matriz2);
  * @param num2 Rating Calculado
  * @return el resultado resta
  */
-int error(int num1, float num2);
+float error(float num1, float num2);
 
 /**
  * Operacion para obtener rating calculado
@@ -78,5 +79,7 @@ int getListLength(void *head, tipoDeNodo tipo);
 void * getByPosition(void * head, int pos, tipoDeNodo tipo);
 
 Calificacion * calificaPelicula(Nodo * usuario, Nodo * pelicula, int rating, Calificacion * calificaciones);
+
+float rms(Nodo *headUsuarios, Nodo *headPeliculas, Calificacion *headCalificacion);
 
 #endif
