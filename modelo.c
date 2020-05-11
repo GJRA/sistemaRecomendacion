@@ -52,9 +52,7 @@ void leerCSV(char *nomFile, Nodo **headUsuarios, Nodo **headPeliculas, Calificac
                         *headPeliculas = agregarALista(*headPeliculas, elemQi, PELICULA);
                     } else {
                       Nodo *temp = NULL;
-                      printf("Antes\n");
                       temp = getById(pos, *headUsuarios);
-                      printf("Despues\n");
                       if(atoi(token)>=0 && temp != NULL) {
                         Calificacion *elemCali = malloc (sizeof (Calificacion));
                         if(elemCali == NULL) printf("ERROR crear calificacion\n");
@@ -94,7 +92,6 @@ void leerCSV(char *nomFile, Nodo **headUsuarios, Nodo **headPeliculas, Calificac
 Nodo * getById(int id, Nodo * head) {
     Nodo *current = head;
     while(current != NULL) {
-      printf("%s\n", current->nombre);
       if(current->id == id) break;
       current = current->next;
     }
