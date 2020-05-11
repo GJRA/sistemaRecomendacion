@@ -31,6 +31,7 @@ void leerCSV(char *nomFile, Nodo **headPeliculas, Nodo **headUsuarios, Calificac
                 if(i==0){
                     if(j!=0){
                         elemPu = malloc (sizeof (Nodo));
+                        if(elemPu == NULL) printf("ERROR crear Usuario\n");
                         elemPu -> id = j-1;
                         strcpy(elemPu -> nombre,token);
                         generarRand(&elemPu->feature_values);
@@ -42,6 +43,7 @@ void leerCSV(char *nomFile, Nodo **headPeliculas, Nodo **headUsuarios, Calificac
                 }else{
                     if(j == 0){
                         elemQi = malloc (sizeof (Nodo));
+                        if(elemQi == NULL) printf("ERROR crear Pelicula\n");
                         elemQi -> id = i-1;
                         strcpy(elemQi -> nombre,token);
                         generarRand(&elemQi->feature_values);
@@ -49,6 +51,7 @@ void leerCSV(char *nomFile, Nodo **headPeliculas, Nodo **headUsuarios, Calificac
                         *headPeliculas = agregarALista(*headPeliculas, elemQi, PELICULA);
                     }else{
                         Calificacion *elemCali = malloc (sizeof (Calificacion));
+                        if(elemCali == NULL) printf("ERROR crear calificacion\n");
                         elemCali -> usuario = elemPu;
                         elemCali -> pelicula = elemQi;
                         elemCali -> rating = atoi(token);
