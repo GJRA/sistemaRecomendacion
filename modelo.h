@@ -67,4 +67,6 @@ int checkInList(Nodo * head, Nodo * elemento);
 
 Calificacion * getCalificacion(Calificacion * head, Calificacion * elemento);
 
+Nodo * getById(int id, Nodo * head);
+
 #endif

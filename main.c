@@ -65,8 +65,11 @@ int main(void) {
     //
     // printf("%p\n", usuarios);
     // printf("%p\n", peliculas);
+    printf("USUARIOS\n");
     printLista(usuarios, USUARIO);
+    printf("PELICULAS\n");
     printLista(peliculas, PELICULA);
+    printf("CALIFICACIONES\n");
     printLista(calificaciones, CALIFICACION);
 
 

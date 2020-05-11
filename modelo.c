@@ -22,6 +22,7 @@ void leerCSV(char *nomFile, Nodo **headUsuarios, Nodo **headPeliculas, Calificac
     srand((unsigned int)time(NULL));
     while (fgets(line, 4098, file))
     {
+        int pos = 0;
         int j = 0;
         const char* tmp = strdup(line);
         char delimitador[] = ",";
@@ -31,8 +32,11 @@ void leerCSV(char *nomFile, Nodo **headUsuarios, Nodo **headPeliculas, Calificac
                 if(i==0){
                     if(j!=0){
                         elemPu = malloc (sizeof (Nodo));
+                        elemPu -> next = NULL;
                         if(elemPu == NULL) printf("ERROR crear Usuario\n");
                         elemPu -> id = j-1;
+                        //int len = strlen(token);
+                        //if(token[len-1] == '\n') token[len-1] = 0;
                         strcpy(elemPu -> nombre,token);
                         generarRand(&elemPu->feature_values);
                         //Primer renglon con usuarios
@@ -45,20 +49,40 @@ void leerCSV(char *nomFile, Nodo **headUsuarios, Nodo **headPeliculas, Calificac
                         elemQi = malloc (sizeof (Nodo));
                         if(elemQi == NULL) printf("ERROR crear Pelicula\n");
                         elemQi -> id = i-1;
+                        elemQi->next = NULL;
                         strcpy(elemQi -> nombre,token);
                         generarRand(&elemQi->feature_values);
                         // printf("Peli %s\t",token );
                         *headPeliculas = agregarALista(*headPeliculas, elemQi, PELICULA);
-                    }else{
-                        if(atoi(token)>=0){
-                            Calificacion *elemCali = malloc (sizeof (Calificacion));
-                            if(elemCali == NULL) printf("ERROR crear calificacion\n");
-                            elemCali -> usuario = elemPu;
-                            elemCali -> pelicula = elemQi;
-                            elemCali -> rating = atoi(token);
-                            // printf("%s\t",token);
-                            *headCalificacion = agregarCalificacion(*headCalificacion, elemCali);
-                        }
+                    } else {
+                      Nodo *temp = NULL;
+                      printf("Antes\n");
+                      temp = getById(pos, *headUsuarios);
+                      printf("Despues\n");
+                      if(atoi(token)>=0 && temp != NULL) {
+                        Calificacion *elemCali = malloc (sizeof (Calificacion));
+                        if(elemCali == NULL) printf("ERROR crear calificacion\n");
+                        elemCali -> usuario = temp;
+                        elemCali -> pelicula = elemQi;
+                        elemCali -> rating = atoi(token);
+                        elemCali->next = NULL;
+                        // printf("%s\t",token);
+                        *headCalificacion = agregarCalificacion(*headCalificacion, elemCali);
+                      }
+                      pos++;
+                    //   Nodo * temp = NULL;
+                    //   do {
+                    //     if(atoi(token)>=0 && temp != NULL){
+                    //         Calificacion *elemCali = malloc (sizeof (Calificacion));
+                    //         if(elemCali == NULL) printf("ERROR crear calificacion\n");
+                    //         elemCali -> usuario = temp;
+                    //         elemCali -> pelicula = elemQi;
+                    //         elemCali -> rating = atoi(token);
+                    //         // printf("%s\t",token);
+                    //         *headCalificacion = agregarCalificacion(*headCalificacion, elemCali);
+                    //     }
+                    //     pos++;
+                    //   } while(temp != NULL);
                     }
 
                 }
@@ -71,6 +95,16 @@ void leerCSV(char *nomFile, Nodo **headUsuarios, Nodo **headPeliculas, Calificac
     }
 }
 
+Nodo * getById(int id, Nodo * head) {
+    Nodo *current = head;
+    while(current != NULL) {
+      printf("%s\n", current->nombre);
+      if(current->id == id) break;
+      current = current->next;
+    }
+    return current;
+}
+
 Nodo * agregarALista(Nodo * head, Nodo * elemento, tipoDeNodo tipo) {
   Nodo * current = head;
   if(current == NULL) {
@@ -81,7 +115,6 @@ Nodo * agregarALista(Nodo * head, Nodo * elemento, tipoDeNodo tipo) {
     current = (Nodo *)getLast(head, tipo);
     current->next = elemento;
   } else {
-    printf("B\n");
     char *str = (tipo ==  USUARIO ? "El usuario\0" : "La pelicula\0");
     printf("%s %s ya existe!!\n", str, elemento->nombre);
   }
@@ -93,9 +126,8 @@ Calificacion * agregarCalificacion(Calificacion * head, Calificacion * elemento)
     current = elemento;
     return current;
   }
-  
+
   Calificacion * update = getCalificacion(head, elemento);
-  printf("%p\n",update);
   if(update == NULL) {
     current = (Calificacion *)getLast(head, CALIFICACION);
     current->next = elemento;
@@ -118,7 +150,6 @@ void * getLast(void * head, tipoDeNodo tipo) {
 int checkInList(Nodo * head, Nodo * elemento) {
   Nodo * current = head;
   while(current != NULL){
-    printf("%s = %s?\n", current->nombre, elemento->nombre);
     if(strcmp(current->nombre, elemento->nombre) == 0) return 1;
     current = current->next;
   }
@@ -126,12 +157,13 @@ int checkInList(Nodo * head, Nodo * elemento) {
 }
 Calificacion * getCalificacion(Calificacion * head, Calificacion * elemento) {
   Calificacion * current = head;
-  printf("%s\t%s\n",elemento->usuario->nombre,elemento->pelicula->nombre);
   while(current != NULL){
-    printf("%s\t%s\n",current->usuario->nombre,current->pelicula->nombre);  
-    //if(current->usuario == elemento->usuario && current->pelicula == elemento->pelicula) return current;
+    if(current->usuario == elemento->usuario && current->pelicula == elemento->pelicula) {
+      printf("YES\n" );
+      return current;
+    }
     current = current->next;
   }
-  printf("\n");
+  //printf("\n");
   return NULL;
 }
