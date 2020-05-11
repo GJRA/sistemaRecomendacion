@@ -1,6 +1,12 @@
 #ifndef VISTA_H
 #define VISTA_H
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+#include <time.h>
+#include "estructuras.h"
 
 // -----------------------------
 // Public interface
@@ -9,8 +15,8 @@
 /* Function prototypes */
 /**
  * El menu de nuestro sistema
- * 
- * 
+ *
+ *
  */
 void menu();
 
@@ -62,5 +68,7 @@ void imprimirRatingPeliculasUsuario(char *nombre_pelicula);
  * @param nombre_usuario nombre del usuario a buscar peliculas y su rating
  */
 void imprimirRatingPeliculasUsuario(char *nombre_usuario);
+
+void printLista(void *head, tipoDeNodo tipo);
 
 #endif

@@ -4,16 +4,16 @@
 CFLAGS = -Wall -g
 
 # External libraries
-LIBS = 
+LIBS =
 
 # Pre-defined macros for conditional compilation
-DEFS =  
+DEFS =
 
 # The final executable program file
 BIN = main
 
 # Object files from which $BIN depends
-OBJS = modelo.o
+OBJS = modelo.o vista.o
 
 # This default rule compiles the executable program
 $(BIN): $(OBJS) $(BIN).c
