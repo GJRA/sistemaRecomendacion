@@ -18,7 +18,7 @@
  *
  * @param nomFile es el nombre del csv donde se obtendran los datos
  */
-void leerCSV(char *nomFile, Nodo **headPeliculas, Nodo **headUsuarios, Calificacion **headCalificacion);
+void leerCSV(char *nomFile, Nodo **headUsuarios, Nodo **headPeliculas, Calificacion **headCalificacion);
 
 /**
  * Crea la grafica Error vs Epochs

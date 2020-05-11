@@ -11,7 +11,7 @@ static void generarRand(float **valores[17]){
 }
 
 
-void leerCSV(char *nomFile, Nodo **headPeliculas, Nodo **headUsuarios, Calificacion **headCalificacion){
+void leerCSV(char *nomFile, Nodo **headUsuarios, Nodo **headPeliculas, Calificacion **headCalificacion){
 	FILE *file;
 	file = fopen(nomFile, "r");
   Nodo *elemPu = NULL;
@@ -50,13 +50,15 @@ void leerCSV(char *nomFile, Nodo **headPeliculas, Nodo **headUsuarios, Calificac
                         // printf("Peli %s\t",token );
                         *headPeliculas = agregarALista(*headPeliculas, elemQi, PELICULA);
                     }else{
-                        Calificacion *elemCali = malloc (sizeof (Calificacion));
-                        if(elemCali == NULL) printf("ERROR crear calificacion\n");
-                        elemCali -> usuario = elemPu;
-                        elemCali -> pelicula = elemQi;
-                        elemCali -> rating = atoi(token);
-                        // printf("%s\t",token);
-                        *headCalificacion = agregarCalificacion(*headCalificacion, elemCali);
+                        if(atoi(token)>=0){
+                            Calificacion *elemCali = malloc (sizeof (Calificacion));
+                            if(elemCali == NULL) printf("ERROR crear calificacion\n");
+                            elemCali -> usuario = elemPu;
+                            elemCali -> pelicula = elemQi;
+                            elemCali -> rating = atoi(token);
+                            // printf("%s\t",token);
+                            *headCalificacion = agregarCalificacion(*headCalificacion, elemCali);
+                        }
                     }
 
                 }
@@ -91,7 +93,9 @@ Calificacion * agregarCalificacion(Calificacion * head, Calificacion * elemento)
     current = elemento;
     return current;
   }
+  
   Calificacion * update = getCalificacion(head, elemento);
+  printf("%p\n",update);
   if(update == NULL) {
     current = (Calificacion *)getLast(head, CALIFICACION);
     current->next = elemento;
@@ -122,9 +126,12 @@ int checkInList(Nodo * head, Nodo * elemento) {
 }
 Calificacion * getCalificacion(Calificacion * head, Calificacion * elemento) {
   Calificacion * current = head;
+  printf("%s\t%s\n",elemento->usuario->nombre,elemento->pelicula->nombre);
   while(current != NULL){
-    if(current->usuario == elemento->usuario && current->pelicula == elemento->pelicula) break;
+    printf("%s\t%s\n",current->usuario->nombre,current->pelicula->nombre);  
+    //if(current->usuario == elemento->usuario && current->pelicula == elemento->pelicula) return current;
     current = current->next;
   }
-  return current;
+  printf("\n");
+  return NULL;
 }
