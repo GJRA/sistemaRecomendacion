@@ -1,6 +1,6 @@
 #include "vista.h"
 
-void printLista(void *head, tipoDeNodo tipo) { 
+void printLista(void *head, tipoDeNodo tipo) {
   if(tipo == CALIFICACION) {
     Calificacion * current = (Calificacion *)head;
     while(current != NULL) {
@@ -12,6 +12,8 @@ void printLista(void *head, tipoDeNodo tipo) {
     while(current != NULL) {
       char *str = tipo == USUARIO ? "Usuario\0" : "Pelicula\0";
       printf("ID: %d\tNombre: %s\tTipo: %s\n", current->id, current->nombre, str);
+      for(int i = 0; i < 17; i++) printf("%f\t", current->feature_values[i]);
+      printf("\n");
       current = current->next;
     }
   }

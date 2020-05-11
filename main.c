@@ -7,6 +7,8 @@ int main(void) {
     Nodo *peliculas = NULL;
     Calificacion *calificaciones = NULL;
 
+    srand((unsigned) time(NULL));
+
     leerCSV("base.csv", &usuarios, &peliculas, &calificaciones);
 
     // printf("%p\n", usuarios);

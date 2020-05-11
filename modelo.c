@@ -1,13 +1,10 @@
 #include "modelo.h"
 /* Private types */
-static void generarRand(float **valores[17]){
+void generarRand(float *val, int length){
     //float valores[17];
-    float val[17];
-    srand((unsigned int)time(NULL));
-    for(int i = 0; i < 17; i++){
+    for(int i = 0; i < length; i++){
         val[i] = (float)rand()/(float)(RAND_MAX/1);
     }
-    strcpy(valores,val);
 }
 
 
@@ -19,7 +16,6 @@ void leerCSV(char *nomFile, Nodo **headUsuarios, Nodo **headPeliculas, Calificac
 
 	int i = 0;
     char line[4098];
-    srand((unsigned int)time(NULL));
     while (fgets(line, 4098, file))
     {
         int pos = 0;
@@ -38,7 +34,7 @@ void leerCSV(char *nomFile, Nodo **headUsuarios, Nodo **headPeliculas, Calificac
                         //int len = strlen(token);
                         //if(token[len-1] == '\n') token[len-1] = 0;
                         strcpy(elemPu -> nombre,token);
-                        generarRand(&elemPu->feature_values);
+                        generarRand(elemPu->feature_values, 17);
                         //Primer renglon con usuarios
                         // printf("Nombres: ");
                         // printf("%s\t",token);
@@ -51,7 +47,7 @@ void leerCSV(char *nomFile, Nodo **headUsuarios, Nodo **headPeliculas, Calificac
                         elemQi -> id = i-1;
                         elemQi->next = NULL;
                         strcpy(elemQi -> nombre,token);
-                        generarRand(&elemQi->feature_values);
+                        generarRand(elemQi->feature_values, 17);
                         // printf("Peli %s\t",token );
                         *headPeliculas = agregarALista(*headPeliculas, elemQi, PELICULA);
                     } else {
@@ -159,7 +155,6 @@ Calificacion * getCalificacion(Calificacion * head, Calificacion * elemento) {
   Calificacion * current = head;
   while(current != NULL){
     if(current->usuario == elemento->usuario && current->pelicula == elemento->pelicula) {
-      printf("YES\n" );
       return current;
     }
     current = current->next;
