@@ -96,7 +96,7 @@ int main(void) {
     printLista(peliculas, PELICULA);
     printf("CALIFICACIONES\n");
     printLista(calificaciones, CALIFICACION);*/
-    rms(usuarios,peliculas,calificaciones);
-
+    float rm= rms(usuarios,peliculas,calificaciones);
+    graficaErrorEpochs("errorEpoch.csv",rm,1);
     return 0;
 }

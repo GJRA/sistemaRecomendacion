@@ -236,7 +236,7 @@ float rms(Nodo *headUsuarios, Nodo *headPeliculas, Calificacion *headCalificacio
           if(getCalificacion(currentC,elem)!=NULL){
             rm=productoPunto(currentP->feature_values,currentU->feature_values);
             sum=sum+pow(error(currentC->rating,rm),2);
-            cont=0;
+            cont++;
             currentU = currentU -> next;
           }else{
             currentU = currentU ->next;
@@ -245,10 +245,22 @@ float rms(Nodo *headUsuarios, Nodo *headPeliculas, Calificacion *headCalificacio
         currentU = headUsuarios;
         currentP = currentP->next;
       }
-        currentC = currentC->next;
-        cont++;
+        currentC = currentC->next;  
     }
     rm=sqrt(sum/cont);
     printf("El rms del 1er epoch es: %f\n",rm);
     return rm;
+}
+
+void graficaErrorEpochs(char *nomFile, float rms, int epoch){
+  printf("\n Creating %s.csv file",nomFile);
+  //nomFile=strcat(nomFile,".csv");
+  FILE *fp;
+  int i,j;
+  
+  printf("filename:%s\n");
+  fp=fopen(nomFile,"w+");
+  fprintf(fp,"%f,%d\n",rms,epoch);
+  fclose(fp);
+  printf("\n %sfile created",nomFile); 
 }
