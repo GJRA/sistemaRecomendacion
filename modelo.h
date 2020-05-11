@@ -69,4 +69,14 @@ Calificacion * getCalificacion(Calificacion * head, Calificacion * elemento);
 
 Nodo * getById(int id, Nodo * head);
 
+int getLastId(Nodo *head);
+
+Nodo * randomMovie(Nodo *head);
+
+int getListLength(void *head, tipoDeNodo tipo);
+
+void * getByPosition(void * head, int pos, tipoDeNodo tipo);
+
+Calificacion * calificaPelicula(Nodo * usuario, Nodo * pelicula, int rating, Calificacion * calificaciones);
+
 #endif

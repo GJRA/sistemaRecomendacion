@@ -1,15 +1,19 @@
 #ifndef CONTROLADOR_H
 #define CONTROLADOR_H
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+#include <time.h>
+#include "estructuras.h"
+#include "modelo.h"
+#include "vista.h"
 // -----------------------------
 // Public interface
 // -----------------------------
 
 /* Function prototypes */
-/**
- * Obtener datos de la matriz general
- *
- * @param nomFile es el nombre del csv donde se obtendran los datos
- */
 
+Nodo * agregarUsuario(char * nombre, Nodo * headUsuarios, Calificacion ** headCalificaciones, Nodo * headPeliculas);
 #endif

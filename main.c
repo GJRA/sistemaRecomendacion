@@ -1,5 +1,6 @@
 #include "modelo.h"
 #include "vista.h"
+#include "controlador.h"
 
 int main(void) {
 
@@ -67,6 +68,7 @@ int main(void) {
     //
     // printf("%p\n", usuarios);
     // printf("%p\n", peliculas);
+
     printf("USUARIOS\n");
     printLista(usuarios, USUARIO);
     printf("PELICULAS\n");
@@ -74,6 +76,26 @@ int main(void) {
     printf("CALIFICACIONES\n");
     printLista(calificaciones, CALIFICACION);
 
+    printf("USUARIOS: %d\n", getListLength(usuarios, USUARIO));
+    printf("PELICULAS: %d\n", getListLength(peliculas, PELICULA));
+    printf("CALIFICACIONES: %d\n", getListLength(calificaciones, CALIFICACION));
+    char ch;
+    scanf(" %c", &ch);
+
+    agregarUsuario("Prueba", usuarios, &calificaciones, peliculas);
+
+    printf("USUARIOS: %d\n", getListLength(usuarios, USUARIO));
+    printf("PELICULAS: %d\n", getListLength(peliculas, PELICULA));
+    printf("CALIFICACIONES: %d\n", getListLength(calificaciones, CALIFICACION));
+
+    scanf(" %c", &ch);
+
+    printf("USUARIOS\n");
+    printLista(usuarios, USUARIO);
+    printf("PELICULAS\n");
+    printLista(peliculas, PELICULA);
+    printf("CALIFICACIONES\n");
+    printLista(calificaciones, CALIFICACION);
 
     return 0;
 }

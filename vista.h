@@ -27,6 +27,8 @@ void menu();
  */
 void imprimirSugerenciaAmigos(char *nombre_usr);
 
+void printNode(void *nodo, tipoDeNodo tipo);
+
 /**
  * Imprime las sugerencias de peliculas de un usuario
  *
@@ -70,5 +72,9 @@ void imprimirRatingPeliculasUsuario(char *nombre_pelicula);
 void imprimirRatingPeliculasUsuario(char *nombre_usuario);
 
 void printLista(void *head, tipoDeNodo tipo);
+
+void printNodeName(Nodo *nodo, tipoDeNodo tipo);
+
+int askUserRating(char * titulo);
 
 #endif

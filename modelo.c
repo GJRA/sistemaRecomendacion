@@ -159,3 +159,52 @@ Calificacion * getCalificacion(Calificacion * head, Calificacion * elemento) {
   //printf("\n");
   return NULL;
 }
+int getLastId(Nodo *head) {
+  Nodo * elemento = getLast(head, USUARIO);
+  return ((Nodo *) elemento)->id;
+}
+Nodo * randomMovie(Nodo *head) {
+  int length = getListLength(head, PELICULA);
+  int random = rand() % length;
+  Nodo * pelicula= (Nodo *)getByPosition(head, random, PELICULA);
+  return pelicula;
+}
+int getListLength(void *head, tipoDeNodo tipo) {
+  void * current = head;
+  int count = 0;
+  while(current != NULL) {
+    if(tipo == CALIFICACION) {
+      current = ((Calificacion *)current)->next;
+    } else {
+      current = ((Nodo *)current)->next;
+    }
+    count++;
+  }
+  return count;
+}
+
+void * getByPosition(void * head, int pos, tipoDeNodo tipo) {
+  if(pos >= getListLength(head, tipo)) return NULL;
+  int i = 0;
+  void * current = head;
+  while (i < pos) {
+    if(tipo == CALIFICACION) {
+      current = ((Calificacion *)current)->next;
+    } else {
+      current = ((Nodo *)current)->next;
+    }
+    i++;
+  }
+  return current;
+}
+
+Calificacion * calificaPelicula(Nodo * usuario, Nodo * pelicula, int rating, Calificacion * calificaciones) {
+  Calificacion *elemCali = malloc (sizeof (Calificacion));
+  if(elemCali == NULL) printf("ERROR crear calificacion\n");
+  elemCali -> usuario = usuario;
+  elemCali -> pelicula = pelicula;
+  elemCali -> rating = rating;
+  elemCali->next = NULL;
+  // printf("%s\t",token);
+  return agregarCalificacion(calificaciones, elemCali);
+}
