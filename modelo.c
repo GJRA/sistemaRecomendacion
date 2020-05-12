@@ -148,6 +148,14 @@ int checkInList(Nodo * head, Nodo * elemento) {
   }
   return 0;
 }
+Nodo * searchInList(Nodo * head, char *nombre) {
+  Nodo * current = head;
+  while(current != NULL){
+    if(strcmp(current->nombre,nombre) == 0) return current;
+    current = current->next;
+  }
+  return NULL;
+}
 Calificacion * getCalificacion(Calificacion * head, Calificacion * elemento) {
   Calificacion * current = head;
   while(current != NULL){
@@ -253,14 +261,14 @@ float rms(Nodo *headUsuarios, Nodo *headPeliculas, Calificacion *headCalificacio
 }
 
 void graficaErrorEpochs(char *nomFile, float rms, int epoch){
-  printf("\n Creating %s.csv file",nomFile);
-  //nomFile=strcat(nomFile,".csv");
+  printf("\n Creating %s.csv file\n",nomFile);
   FILE *fp;
   int i,j;
-  
-  printf("filename:%s\n");
-  fp=fopen(nomFile,"w+");
+  if(epoch==1){
+    fp=fopen(nomFile,"w+");
+  }else{
+    fp=fopen(nomFile,"a+");
+  }
   fprintf(fp,"%f,%d\n",rms,epoch);
   fclose(fp);
-  printf("\n %sfile created",nomFile); 
 }

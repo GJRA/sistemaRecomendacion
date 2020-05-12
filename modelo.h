@@ -66,6 +66,8 @@ void * getLast(void * head, tipoDeNodo tipo);
 
 int checkInList(Nodo * head, Nodo * elemento);
 
+Nodo * searchInList(Nodo * head, char *nombre);
+
 Calificacion * getCalificacion(Calificacion * head, Calificacion * elemento);
 
 Nodo * getById(int id, Nodo * head);

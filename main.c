@@ -98,5 +98,7 @@ int main(void) {
     printLista(calificaciones, CALIFICACION);*/
     float rm= rms(usuarios,peliculas,calificaciones);
     graficaErrorEpochs("errorEpoch.csv",rm,1);
+    graficaErrorEpochs("errorEpoch.csv",rm,2);
+    Nodo * amigo =recomendarAmigo(usuarios,"Simon");
     return 0;
 }

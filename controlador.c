@@ -25,3 +25,25 @@ Nodo * agregarUsuario(char * nombre, Nodo * headUsuarios, Calificacion ** headCa
   }
   return agregarALista(headUsuarios, elemento, USUARIO);
 }
+
+Nodo * recomendarAmigo(Nodo *headUsuarios,char *nombre){
+  float max = 0.0,val=0.0;
+  Nodo * amigoRecomendado = NULL;
+  Nodo * current = headUsuarios;
+  Nodo * usuario = searchInList(headUsuarios,nombre);
+  if(usuario!=NULL){
+    while(current != NULL){
+      if(strcmp(current->nombre,nombre) != 0){
+        val =productoPunto(usuario->feature_values,current->feature_values);
+        if (val>max){
+          amigoRecomendado = current;
+          max=val;
+        }
+      }
+      current = current->next;
+    }
+  }else{
+    printf("El usuario: %s no existe en la base de datos, sorry :(\n",nombre);
+  }
+  return amigoRecomendado;
+}

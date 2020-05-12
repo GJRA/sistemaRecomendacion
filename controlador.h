@@ -16,4 +16,6 @@
 /* Function prototypes */
 
 Nodo * agregarUsuario(char * nombre, Nodo * headUsuarios, Calificacion ** headCalificaciones, Nodo * headPeliculas);
+
+Nodo * recomendarAmigo(Nodo *headUsuarios,char *nombre);
 #endif
