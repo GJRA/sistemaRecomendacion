@@ -18,4 +18,5 @@
 Nodo * agregarUsuario(char * nombre, Nodo * headUsuarios, Calificacion ** headCalificaciones, Nodo * headPeliculas);
 
 Nodo * recomendarAmigo(Nodo *headUsuarios,char *nombre);
+Nodo * recomendarPelicula(Nodo *headPeliculas,Calificacion *headCalificacion,Nodo *headUsuarios, char *nombre);
 #endif

@@ -47,3 +47,29 @@ Nodo * recomendarAmigo(Nodo *headUsuarios,char *nombre){
   }
   return amigoRecomendado;
 }
+
+Nodo * recomendarPelicula(Nodo *headPeliculas,Calificacion *headCalificacion,Nodo *headUsuarios, char *nombre){
+  float max = 0.0,val=0.0;
+  Nodo * peliRecomendada = NULL;
+  Nodo * current = headPeliculas;
+  Calificacion * cal = headCalificacion;
+  Nodo * usuario = searchInList(headUsuarios,nombre);
+  Calificacion *elemCali = malloc (sizeof (Calificacion));
+  if(usuario!=NULL){
+    while(current != NULL){  
+      elemCali -> usuario = usuario;
+      elemCali -> pelicula = current;
+      if(getCalificacion(cal,elemCali)==NULL){
+        val =productoPunto(usuario->feature_values,current->feature_values);
+        if (val>max){
+          peliRecomendada = current;
+          max=val;
+        }
+      }
+      current = current->next;
+    }
+  }else{
+    printf("El usuario: %s no existe en la base de datos, sorry :(\n",nombre);
+  }
+  return peliRecomendada;
+}

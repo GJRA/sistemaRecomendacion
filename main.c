@@ -100,5 +100,8 @@ int main(void) {
     graficaErrorEpochs("errorEpoch.csv",rm,1);
     graficaErrorEpochs("errorEpoch.csv",rm,2);
     Nodo * amigo =recomendarAmigo(usuarios,"Simon");
+    Nodo *peli = recomendarPelicula(peliculas,calificaciones,usuarios,"Gaby");
+    printf("Peli recomendada para Gaby es %s\n\n",peli->nombre);
+    printf("Amigo recomendado para Simon es %s\n",amigo->nombre);
     return 0;
 }

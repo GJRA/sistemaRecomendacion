@@ -234,13 +234,12 @@ float rms(Nodo *headUsuarios, Nodo *headPeliculas, Calificacion *headCalificacio
     Calificacion * currentC = headCalificacion;
     Nodo *currentP = headPeliculas;
     Nodo *currentU = headUsuarios;
+    Calificacion *elem= malloc (sizeof (Calificacion));
     while(currentC != NULL){
       while(currentP != NULL){
         while (currentU != NULL){
-          Calificacion *elem= malloc (sizeof (Calificacion));
           elem -> usuario = currentU;
           elem -> pelicula = currentP;
-          currentU = currentU->next;
           if(getCalificacion(currentC,elem)!=NULL){
             rm=productoPunto(currentP->feature_values,currentU->feature_values);
             sum=sum+pow(error(currentC->rating,rm),2);
@@ -261,7 +260,6 @@ float rms(Nodo *headUsuarios, Nodo *headPeliculas, Calificacion *headCalificacio
 }
 
 void graficaErrorEpochs(char *nomFile, float rms, int epoch){
-  printf("\n Creating %s.csv file\n",nomFile);
   FILE *fp;
   int i,j;
   if(epoch==1){
