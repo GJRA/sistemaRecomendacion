@@ -19,4 +19,6 @@ Nodo * agregarUsuario(char * nombre, Nodo * headUsuarios, Calificacion ** headCa
 
 Nodo * recomendarAmigo(Nodo *headUsuarios,char *nombre);
 Nodo * recomendarPelicula(Nodo *headPeliculas,Calificacion *headCalificacion,Nodo *headUsuarios, char *nombre);
+
+void entrenarSistema(char *nomFile, Calificacion * calificaciones);
 #endif

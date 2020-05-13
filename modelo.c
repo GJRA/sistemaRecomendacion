@@ -1,8 +1,8 @@
 #include "modelo.h"
 /* Private types */
-void generarRand(float *val, int length){
+void generarRand(float *val){
     //float valores[17];
-    for(int i = 0; i < length; i++){
+    for(int i = 0; i < N_FEATURES; i++){
         val[i] = (float)rand()/(float)(RAND_MAX/1);
     }
 }
@@ -34,7 +34,7 @@ void leerCSV(char *nomFile, Nodo **headUsuarios, Nodo **headPeliculas, Calificac
                         //int len = strlen(token);
                         //if(token[len-1] == '\n') token[len-1] = 0;
                         strcpy(elemPu -> nombre,token);
-                        generarRand(elemPu->feature_values, 17);
+                        generarRand(elemPu->feature_values);
                         //Primer renglon con usuarios
                         // printf("Nombres: ");
                         // printf("%s\t",token);
@@ -47,7 +47,7 @@ void leerCSV(char *nomFile, Nodo **headUsuarios, Nodo **headPeliculas, Calificac
                         elemQi -> id = i-1;
                         elemQi->next = NULL;
                         strcpy(elemQi -> nombre,token);
-                        generarRand(elemQi->feature_values, 17);
+                        generarRand(elemQi->feature_values);
                         // printf("Peli %s\t",token );
                         *headPeliculas = agregarALista(*headPeliculas, elemQi, PELICULA);
                     } else {
@@ -58,7 +58,7 @@ void leerCSV(char *nomFile, Nodo **headUsuarios, Nodo **headPeliculas, Calificac
                         if(elemCali == NULL) printf("ERROR crear calificacion\n");
                         elemCali -> usuario = temp;
                         elemCali -> pelicula = elemQi;
-                        elemCali -> rating = atoi(token);
+                        elemCali -> rating = atoi(token)/10.0;
                         elemCali->next = NULL;
                         // printf("%s\t",token);
                         *headCalificacion = agregarCalificacion(*headCalificacion, elemCali);
@@ -206,13 +206,15 @@ void * getByPosition(void * head, int pos, tipoDeNodo tipo) {
   return current;
 }
 
-Calificacion * calificaPelicula(Nodo * usuario, Nodo * pelicula, int rating, Calificacion * calificaciones) {
+Calificacion * calificaPelicula(Nodo * usuario, Nodo * pelicula, float rating, Calificacion * calificaciones) {
   Calificacion *elemCali = malloc (sizeof (Calificacion));
   if(elemCali == NULL) printf("ERROR crear calificacion\n");
   elemCali -> usuario = usuario;
   elemCali -> pelicula = pelicula;
   elemCali -> rating = rating;
   elemCali->next = NULL;
+  entrenar(usuario->feature_values, pelicula->feature_values, rating, USER_LEARNING);
+  entrenar(pelicula->feature_values, usuario->feature_values, rating, MOVIE_LEARNING);
   // printf("%s\t",token);
   return agregarCalificacion(calificaciones, elemCali);
 }
@@ -229,34 +231,17 @@ float error(float num1, float num2){
     return (num1-num2);
 }
 
-float rms(Nodo *headUsuarios, Nodo *headPeliculas, Calificacion *headCalificacion){
-    float rm=0.0,sum=0.0,cont=1.0;
-    Calificacion * currentC = headCalificacion;
-    Nodo *currentP = headPeliculas;
-    Nodo *currentU = headUsuarios;
-    Calificacion *elem= malloc (sizeof (Calificacion));
-    while(currentC != NULL){
-      while(currentP != NULL){
-        while (currentU != NULL){
-          elem -> usuario = currentU;
-          elem -> pelicula = currentP;
-          if(getCalificacion(currentC,elem)!=NULL){
-            rm=productoPunto(currentP->feature_values,currentU->feature_values);
-            sum=sum+pow(error(currentC->rating,rm),2);
-            cont++;
-            currentU = currentU -> next;
-          }else{
-            currentU = currentU ->next;
-          }
-        }
-        currentU = headUsuarios;
-        currentP = currentP->next;
-      }
-        currentC = currentC->next;  
+float rms(Calificacion *headCalificacion){
+    int length = getListLength(headCalificacion, CALIFICACION);
+    Calificacion *current = headCalificacion;
+    float sum = 0.0;
+    while (current != NULL) {
+      float producto = productoPunto(current->usuario->feature_values, current->pelicula->feature_values);
+      sum += pow(error(current->rating, producto), 2);
+      current = current->next;
     }
-    rm=sqrt(sum/cont);
-    printf("El rms del 1er epoch es: %f\n",rm);
-    return rm;
+    float promedio = sum / length;
+    return sqrt(promedio);
 }
 
 void graficaErrorEpochs(char *nomFile, float rms, int epoch){
@@ -269,4 +254,25 @@ void graficaErrorEpochs(char *nomFile, float rms, int epoch){
   }
   fprintf(fp,"%f,%d\n",rms,epoch);
   fclose(fp);
+}
+
+void setGetPromedio(float *val, Nodo * head) {
+  for(int i = 0; i < N_FEATURES; i++) {
+    float sum = 0.0;
+    int count = getListLength(head, USUARIO);
+    Nodo * current = head;
+    while (current != NULL) {
+      sum += current->feature_values[i];
+      current = current->next;
+    }
+    val[i] = sum/count;
+  }
+}
+
+void entrenar(float *target, float *referencia, float rating, float learning_rate) {
+  float punto = productoPunto(target, referencia);
+  float errorF = error(rating, punto);
+  for(int i = 0; i < N_FEATURES; i++) {
+    target[i] = target[i]+learning_rate*errorF*referencia[i];
+  }
 }

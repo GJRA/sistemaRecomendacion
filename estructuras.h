@@ -1,6 +1,12 @@
 #ifndef ESTRUCTURAS_H
 #define ESTRUCTURAS_H
 
+#define USER_LEARNING 0.01
+#define MOVIE_LEARNING 0.001
+
+#define LIM_MIN 0.02
+
+#define N_FEATURES 17
 /* Types declarations */
 // typedef struct Pu {
 //     int idPu;
@@ -10,7 +16,7 @@
 // }Pu_t;
 //
 // typedef struct Qi{
-//     int idQi; 
+//     int idQi;
 //     char nombre_pelicula[40];
 //     float feature_values[17];
 //     struct Qi *next;
@@ -19,14 +25,14 @@
 typedef struct Nodo_t{
     int id;
     char nombre[40];
-    float feature_values[17];
+    float feature_values[N_FEATURES];
     struct Nodo_t *next;
 }Nodo;
 
 typedef struct Calificacion_t{
     Nodo *usuario;
     Nodo *pelicula;
-    int rating;
+    float rating;
     struct Calificacion_t *next;
 }Calificacion;
 

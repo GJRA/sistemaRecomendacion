@@ -13,6 +13,7 @@
 // Public interface
 // -----------------------------
 
+void generarRand(float *val);
 /* Function prototypes */
 /**
  * Obtener datos de la matriz general
@@ -49,15 +50,6 @@ float productoPunto(float *matriz, float *matriz2);
  */
 float error(float num1, float num2);
 
-/**
- * Operacion para obtener rating calculado
- *
- * @param matrizTarget matriz que se actualizara
- * @param matrizReferencia matriz que se neceita en la formula
- * @param rating rating del CSV
- */
-void entrenar(float *matrizTarget, float *matrizReferencia, int rating );
-
 Nodo * agregarALista(Nodo * head, Nodo * elemento, tipoDeNodo tipo);
 
 Calificacion * agregarCalificacion(Calificacion * head, Calificacion * elemento);
@@ -80,8 +72,12 @@ int getListLength(void *head, tipoDeNodo tipo);
 
 void * getByPosition(void * head, int pos, tipoDeNodo tipo);
 
-Calificacion * calificaPelicula(Nodo * usuario, Nodo * pelicula, int rating, Calificacion * calificaciones);
+Calificacion * calificaPelicula(Nodo * usuario, Nodo * pelicula, float rating, Calificacion * calificaciones);
 
-float rms(Nodo *headUsuarios, Nodo *headPeliculas, Calificacion *headCalificacion);
+float rms(Calificacion *headCalificacion);
+
+void setGetPromedio(float *val, Nodo * head);
+
+void entrenar(float *target, float *referencia, float rating, float learning_rate);
 
 #endif
