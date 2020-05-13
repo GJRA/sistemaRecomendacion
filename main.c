@@ -56,5 +56,6 @@ int main(void) {
     printNode(peli, PELICULA);
 
     printReporte("reporte.txt", usuarios, peliculas, calificaciones);
+    printCSV("base2.csv", usuarios, peliculas, calificaciones);
     return 0;
 }

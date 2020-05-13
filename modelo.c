@@ -276,3 +276,106 @@ void entrenar(float *target, float *referencia, float rating, float learning_rat
     target[i] = target[i]+learning_rate*errorF*referencia[i];
   }
 }
+
+void printMatrizFile(FILE *fp, Nodo *usuarios, Nodo *peliculas, Calificacion *calificaciones, int reporte) {
+  if(reporte) {
+    int usersLength = getListLength(usuarios, USUARIO);
+    int quantity = (usersLength+1)*5+2;
+    for (int i = 0; i < quantity; i++) fprintf(fp, "=");
+    fprintf(fp, "\n");
+    fprintf(fp, "| ID |");
+    Nodo *current = usuarios;
+    while (current != NULL) {
+      fprintf(fp, "| %2d ", current->id);
+      current = current->next;
+    }
+    fprintf(fp, "|\n");
+    for (int i = 0; i < quantity; i++) fprintf(fp, "=");
+    fprintf(fp, "\n");
+    current = peliculas;
+    while (current != NULL) {
+      fprintf(fp, "| %2d |", current->id);
+      Nodo *currentUser = usuarios;
+      while(currentUser != NULL) {
+        Calificacion * elemento = malloc(sizeof(Calificacion));
+        elemento->usuario = currentUser;
+        elemento->pelicula = current;
+        Calificacion *calif = getCalificacion(calificaciones, elemento);
+        int rating = calif == NULL ? -1 : (calif->rating)*10;
+        fprintf(fp, "| %2d ", rating);
+        currentUser = currentUser->next;
+        free(elemento);
+      }
+      fprintf(fp, "|\n");
+      for (int i = 0; i < quantity; i++) fprintf(fp, "-");
+      fprintf(fp, "\n");
+      current = current->next;
+    }
+  } else {
+    fprintf(fp, "Nombre Pelicula");
+    Nodo *current = usuarios;
+    while (current != NULL) {
+      fprintf(fp, ",%s ", current->nombre);
+      current = current->next;
+    }
+    fprintf(fp, "\n");
+    current = peliculas;
+    while (current != NULL) {
+      fprintf(fp, "%s", current->nombre);
+      Nodo *currentUser = usuarios;
+      while(currentUser != NULL) {
+        Calificacion * elemento = malloc(sizeof(Calificacion));
+        elemento->usuario = currentUser;
+        elemento->pelicula = current;
+        Calificacion *calif = getCalificacion(calificaciones, elemento);
+        int rating = calif == NULL ? -1 : (calif->rating)*10;
+        fprintf(fp, ",%d ", rating);
+        currentUser = currentUser->next;
+        free(elemento);
+      }
+      fprintf(fp, "\n");
+      current = current->next;
+    }
+  }
+}
+
+void printListaFile(FILE *fp, void *head, tipoDeNodo tipo) {
+  if (tipo != CALIFICACION) {
+    Nodo * current = (Nodo *)head;
+    char *str = tipo == USUARIO ? "Usuarios\0" : "Peliculas\0";
+    fprintf(fp, "%s:\n", str);
+    while(current != NULL) {
+      printNodeFile(fp, current, tipo);
+      current = current->next;
+    }
+  }
+}
+
+void printNodeFile(FILE *fp, void *nodo, tipoDeNodo tipo) {
+  if(tipo != CALIFICACION) {
+      Nodo * current = (Nodo *)nodo;
+      if(current->nombre[strlen(current->nombre)-1] == '\n') current->nombre[strlen(current->nombre)-1] = '\0';
+      fprintf(fp, "\n");
+      fprintf(fp, "\t\t\t\t    ID: %d\t\tNombre: %s\n", current->id, current->nombre);
+      for(int i = 0; i < 97; i++) fprintf(fp, "=");
+      fprintf(fp, "\n");
+      fprintf(fp, "|\t\t\t\t\t    Features\t\t\t\t\t\t|\n");
+      for(int i = 0; i < 97; i++) fprintf(fp, "=");
+      fprintf(fp, "\n");
+      for(int i = 0; i < N_FEATURES/4*5; i++) {
+        if(i % 4 == 0 && i != 0) {
+            fprintf(fp, "|\n");
+            for(int i = 0; i < 97; i++) fprintf(fp, "-");
+            fprintf(fp, "\n");
+        }
+        if(i < N_FEATURES) {
+          fprintf(fp, "|\t%f\t", current->feature_values[i]);
+        } else {
+          fprintf(fp, "|\t\t\t");
+        }
+      }
+      fprintf(fp, "|\n");
+      for(int i = 0; i < 97; i++) fprintf(fp, "=");
+      fprintf(fp, "\n\n");
+  }
+}

@@ -114,3 +114,22 @@ void entrenarSistema(char *nomFile, Calificacion * calificaciones) {
   // } while (errorRms > LIM_MIN && sameErrorCount < pow(USER_LEARNING, -1));
   } while (errorRms > LIM_MIN);
 }
+
+void printReporte(char *fileName, Nodo *usuarios, Nodo *peliculas, Calificacion *calificaciones) {
+  FILE *fp;
+  fp=fopen(fileName,"w+");
+  fprintf(fp, "REPORTE DEL PROGRAMA\n\n");
+  printListaFile(fp, usuarios, USUARIO);
+  fprintf(fp, "\n");
+  printListaFile(fp, peliculas, PELICULA);
+  fprintf(fp, "\n");
+  printMatrizFile(fp, usuarios, peliculas, calificaciones, 1);
+  fclose(fp);
+}
+
+void printCSV(char *fileName, Nodo *usuarios, Nodo *peliculas, Calificacion *calificaciones) {
+  FILE *fp;
+  fp=fopen(fileName,"w+");
+  printMatrizFile(fp, usuarios, peliculas, calificaciones, 0);
+  fclose(fp);
+}

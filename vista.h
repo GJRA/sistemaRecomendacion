@@ -79,12 +79,4 @@ void printNodeName(Nodo *nodo, tipoDeNodo tipo);
 int askUserRating(char * titulo);
 
 void printProgress(int length, int counter, int bar);
-
-void printNodeFile(FILE *fp, void *nodo, tipoDeNodo tipo);
-
-void printReporte(char *fileName, Nodo *usuarios, Nodo *peliculas, Calificacion *calificaciones);
-
-void printListaFile(FILE *fp, void *nodo, tipoDeNodo tipo);
-
-void printMatrizFile(FILE *fp, Nodo *usuarios, Nodo *peliculas, Calificacion *calificacones);
 #endif
