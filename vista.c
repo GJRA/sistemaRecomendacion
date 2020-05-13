@@ -155,3 +155,36 @@ void printProgress(int length, int counter, int bar) {
   printf(" [%d %%]\r", percent);
   fflush(stdout);
 }
+
+void printFeature(char *nombre,Nodo *headNodo){
+  char nombreFeatures[17][15] = {"Terror/Suspenso","Accion","Comedia","Dramatica",
+  "Musicales","Ciencia Ficcion","Guerra","Crimen","Infantil","Romance",
+  "Animada","Fantasia","Extranjera","Larga","Culto","Documental","Basada en Hechos"
+  };
+  Nodo *nodo = searchInList(headNodo, nombre);
+  printf("Features de %s\n",nodo->nombre);
+  for(int i=0;i<17;i++){
+    printf("%s -- > %f\n",nombreFeatures[i],nodo->feature_values[i]);
+  }
+}
+
+int menu(){
+  int opc = 0;
+  printf("\n\t\t\tSISTEMA DE RECOMENDACION NETFLIZ\t\t\t\n");
+  printf("Antes de usar este sistema se debe entrenar con un archivo csv\n");
+  printf("Debes escribir el numero de la opcion que quieres\n");
+  printf("\t1. Entrenar\n");
+  printf("\t2. Imprimir sugerencia de amigos\n");
+  printf("\t3. Imprimir sugerencia de peliculas para un usuario\n");
+  printf("\t4. Imprimir rating de las peliculas de un usuario\n");
+  printf("\t5. Imprimir los features de un pelicula\n");
+  printf("\t6. Imprimir los features de un usuario\n");
+  printf("\t7. Imprimir los ratings de todos los usuarios para una pelicula\n");
+  printf("\t8. Generar Reporte\n");
+  printf("\t9. Agregar nuevo usuario\n");
+  printf("\t10. Agregar nueva pelicula\n");
+  printf("\t11. Calificar pelicula\n");
+  printf("\t12. Salir\n");
+  scanf(" %d", &opc);
+  return opc;
+}
