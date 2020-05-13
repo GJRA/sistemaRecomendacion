@@ -48,6 +48,32 @@ Nodo * recomendarAmigo(Nodo *headUsuarios,char *nombre){
   return amigoRecomendado;
 }
 
+void peliculasParecidas(Nodo *headPeliculas,char *nombre, Nodo *peliculasParecidas[]){
+  Nodo * pelicula = searchInList(headPeliculas,nombre);
+  if(pelicula!=NULL){
+    int i = 0;
+    do {
+      float max = 0.0,val=0.0;
+      Nodo * peliculaParecida = NULL;
+      Nodo * current = headPeliculas;
+      while(current != NULL){
+        if(strcmp(current->nombre,nombre) != 0){
+          val =productoPunto(pelicula->feature_values,current->feature_values);
+          if (val>max && !contains(peliculasParecidas, current, 3)){
+            peliculaParecida = current;
+            max=val;
+          }
+        }
+        current = current->next;
+      }
+      peliculasParecidas[i] = peliculaParecida;
+      i++;
+    } while(i <= 3);
+  }else{
+    printf("La pelicula: %s no existe en la base de datos, sorry :(\n",nombre);
+  }
+}
+
 Nodo * recomendarPelicula(Nodo *headPeliculas,Calificacion *headCalificacion,Nodo *headUsuarios, char *nombre){
   float max = 0.0,val=0.0;
   Nodo * peliRecomendada = NULL;

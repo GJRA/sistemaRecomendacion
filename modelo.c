@@ -379,3 +379,9 @@ void printNodeFile(FILE *fp, void *nodo, tipoDeNodo tipo) {
       fprintf(fp, "\n\n");
   }
 }
+int contains(Nodo *lista[], Nodo *nodo, int length) {
+  for(int i = 0; i < length; i++) {
+    if(lista[i] == nodo) return 1;
+  }
+  return 0;
+}

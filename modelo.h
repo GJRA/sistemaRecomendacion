@@ -87,4 +87,6 @@ void printListaFile(FILE *fp, void *nodo, tipoDeNodo tipo);
 
 void printMatrizFile(FILE *fp, Nodo *usuarios, Nodo *peliculas, Calificacion *calificaciones, int reporte);
 
+int contains(Nodo *lista[], Nodo *nodo, int length);
+
 #endif

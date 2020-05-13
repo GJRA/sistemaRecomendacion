@@ -24,6 +24,9 @@ int main(void) {
     Nodo * yo = searchInList(usuarios, "Simon");
     Nodo * amigo =recomendarAmigo(usuarios,"Simon");
     Nodo *peli = recomendarPelicula(peliculas,calificaciones,usuarios,"Simon");
+    Nodo *parecidas[3] = {NULL, NULL, NULL};
+    peliculasParecidas(peliculas, "Joker", parecidas);
+    for(int i = 0; i <3; i++) printNode(parecidas[i], PELICULA);
 
     printf("Yo:\n");
     printNode(yo, USUARIO);
