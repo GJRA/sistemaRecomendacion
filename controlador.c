@@ -159,3 +159,30 @@ void printCSV(char *fileName, Nodo *usuarios, Nodo *peliculas, Calificacion *cal
   printMatrizFile(fp, usuarios, peliculas, calificaciones, 0);
   fclose(fp);
 }
+Nodo * agregarPelicula(char * nombre, Nodo * headPeliculas) {
+  Nodo * peliculasParecidas[5];
+  Nodo * elemento = malloc(sizeof(Nodo));
+  elemento->next = NULL;
+  strcpy(elemento->nombre, nombre);
+  elemento->id = headPeliculas == NULL ? 1 : getLastId(headPeliculas)+1;
+  int i = 0;
+  while (i < 5) {
+    Nodo *peliculas[2];
+    Nodo *peli;
+    do {
+      peli = randomMovie(headPeliculas);
+    } while(contains(peliculasParecidas, peli, 5));
+    peliculas[0] = peli;
+    do {
+      do {
+        peli = randomMovie(headPeliculas);
+      } while(contains(peliculasParecidas, peli, 5));
+      peliculas[1] = peli;
+    } while(peliculas[0]->nombre==peliculas[1]->nombre);
+    int opcion = askMovies(peliculas);
+    peliculasParecidas[i] = peliculas[opcion];
+    i++;
+  }
+  promedioPeliculas(elemento->feature_values, peliculasParecidas, 5);
+  return agregarALista(headPeliculas, elemento, PELICULA);
+}

@@ -89,4 +89,6 @@ void printMatrizFile(FILE *fp, Nodo *usuarios, Nodo *peliculas, Calificacion *ca
 
 int contains(Nodo *lista[], Nodo *nodo, int length);
 
+void promedioPeliculas(float *val, Nodo * array[], int length);
+
 #endif

@@ -79,4 +79,6 @@ void printNodeName(Nodo *nodo, tipoDeNodo tipo);
 int askUserRating(char * titulo);
 
 void printProgress(int length, int counter, int bar);
+
+int askMovies(Nodo *peliculas[]);
 #endif

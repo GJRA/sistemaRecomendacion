@@ -28,9 +28,9 @@ void printNode(void *nodo, tipoDeNodo tipo) {
     } else {
       Nodo * current = (Nodo *)nodo;
       char *str = tipo == USUARIO ? "Usuario\0" : "Pelicula\0";
-      printf("ID: %d\tNombre: %s\tTipo: %s\n", current->id, current->nombre, str);
-      for(int i = 0; i < N_FEATURES; i++) printf("%f,", current->feature_values[i]);
-      printf("\n");
+      printf("ID: %d\tNombre: %s\tTipo: %s\nFeatures:\n", current->id, current->nombre, str);
+      for(int i = 0; i < N_FEATURES; i++) printf("\tFeature #%d: %f\n", i+1,current->feature_values[i]);
+      printf("\n\n");
     }
   }
 }
@@ -61,4 +61,21 @@ void printProgress(int length, int counter, int bar) {
   }
   printf(" [%d %%]\r", percent);
   fflush(stdout);
+}
+
+int askMovies(Nodo *peliculas[]) {
+  int opcion;
+  int valid = 1;;
+  printf("Que pelicula se parece mas?\n");
+  for(int j = 0; j < 2; j++) printf("\t%d --> %s\n", j, peliculas[j]->nombre);
+
+  do {
+    printf("Opcion: ");
+    scanf("%d", &opcion);
+    if(opcion > 1 || opcion < 0) {
+      printf("Opcion invalida\n");
+      valid = 0;
+    }
+  } while(!valid);
+  return opcion;
 }

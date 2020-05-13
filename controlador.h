@@ -27,4 +27,6 @@ void printReporte(char *fileName, Nodo *usuarios, Nodo *peliculas, Calificacion 
 void printCSV(char *fileName, Nodo *usuarios, Nodo *peliculas, Calificacion *calificaciones);
 
 void peliculasParecidas(Nodo *headPeliculas,char *nombre, Nodo *peliculasParecidas[]);
+
+Nodo * agregarPelicula(char * nombre, Nodo * headPeliculas);
 #endif

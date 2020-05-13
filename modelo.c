@@ -385,3 +385,13 @@ int contains(Nodo *lista[], Nodo *nodo, int length) {
   }
   return 0;
 }
+
+void promedioPeliculas(float *val, Nodo * array[], int length) {
+  for(int i = 0; i < N_FEATURES; i++) {
+    float sum = 0.0;
+    for(int j = 0; j < length; j++) {
+      sum += array[j]->feature_values[i];
+    }
+    val[i] = sum/length;
+  }
+}
