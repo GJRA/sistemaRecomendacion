@@ -91,9 +91,11 @@ int menu(){
   printf("\t9. Agregar nuevo usuario\n");
   printf("\t10. Agregar nueva pelicula\n");
   printf("\t11. Calificar pelicula\n");
-  printf("\t12. Salir\n");
+  printf("\t12. Imprimir pelicula parecida\n");
+  printf("\t13. Salir\n");
   scanf(" %d", &opc);
   return opc;
+}
 int askMovies(Nodo *peliculas[]) {
   int opcion;
   int valid = 1;;

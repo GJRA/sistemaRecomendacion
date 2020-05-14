@@ -16,8 +16,9 @@ int main(void) {
     entrenarSistema("errorEpoch.csv", calificaciones);
 
     int opc =0;
-    char nombre[40];
-    while(opc!=12){
+    char nombre[40],nom[40];
+    float rat;
+    while(opc<13){
         opc = menu();
         switch(opc){
             case 1 :
@@ -60,16 +61,36 @@ int main(void) {
                 agregarUsuario(nombre, usuarios, &calificaciones, peliculas);
             break;
             case 10: 
-                printf("Agregar pelicula \n");
+                printf("Escribe el nombre \n");
+                scanf("%s",&nombre);
+                agregarPelicula(nombre,peliculas);
             break;
             case 11: 
-                printf("Calificar pelicula");
+                printf("Escribe el nombre del usuario que realizara la calificacion\n");
+                scanf("%s",&nombre);
+                printf("Escribe el nombre de la pelicula a calificar\n");
+                scanf("%s",&nom);
+                Nodo * usr = searchInList(usuarios, nombre);
+                Nodo * pel = searchInList(peliculas, nom);
+                printf("Escribe la calificacion modificada \n");
+                scanf("%f",rat);
+                calificaPelicula(usr, pel, rat,calificaciones);
             break;
             case 12: 
+                printf("Escribe el nombre de la pelicula para buscar su peliculas parecidas\n");
+                scanf("%s",&nom);
+                Nodo *parecidas[3] = {NULL, NULL, NULL};
+                peliculasParecidas(peliculas, nom, parecidas);
+                printf("Parecidas:\n");
+                for(int i = 0; i <3; i++) printNode(parecidas[i], PELICULA);
+            break;
+            case 13: 
+                printCSV("base2.csv", usuarios, peliculas, calificaciones);
+                printReporte("reporte.txt", usuarios, peliculas, calificaciones);
                 printf("Adios vaquero!\n");
             break;
             default:
-                printf("Opcion no valido\n");
+                printf("Opcion no valida\n");
             break;
         }
     }
