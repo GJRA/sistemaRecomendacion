@@ -72,13 +72,44 @@ void imprimirRatingPeliculasUsuario(char *nombre_pelicula);
  */
 void imprimirRatingPeliculasUsuario(char *nombre_usuario);
 
+/**
+ * Recorre e imprime una lista
+ *
+ * @param head apuntador al incio de la lista
+ * @param tipo el tipo de los nodos de la lista
+ */
 void printLista(void *head, tipoDeNodo tipo);
 
+/**
+ * Imprime el nombre y tipo de un nodo
+ *
+ * @param nodo apuntador al nodo
+ * @param tipo el tipo de los nodos de la lista
+ */
 void printNodeName(Nodo *nodo, tipoDeNodo tipo);
 
+/**
+ * Pide al usuario el rating de una película
+ *
+ * @param titulo titulo de la pelicula
+ * @return el rating indicado
+ */
 int askUserRating(char * titulo);
 
+/**
+ * Imprime una barra de progreso (no se utiliza)
+ *
+ * @param length cantidad de información
+ * @param counter en qué punto de la información vamos
+ * @param bar longitud de la barra
+ */
 void printProgress(int length, int counter, int bar);
 
+/**
+ * Pide al usuario que escoja entre dos películas
+ *
+ * @param peliculas arreglo de películas
+ * @return la posición de la película elegida
+ */
 int askMovies(Nodo *peliculas[]);
 #endif
