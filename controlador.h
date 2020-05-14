@@ -81,8 +81,9 @@ void printCSV(char *fileName, Nodo *usuarios, Nodo *peliculas, Calificacion *cal
  * @param headPeliculas la lista de películas
  * @param nombre el nombre de la película de cuál obtener las parecidas
  * @param peliculasParecidas el arreglo de películas parecidas
+ * @return 1 si existía la película, 0 si no
  */
-void peliculasParecidas(Nodo *headPeliculas,char *nombre, Nodo *peliculasParecidas[]);
+int peliculasParecidas(Nodo *headPeliculas,char *nombre, Nodo *peliculasParecidas[]);
 
 /**
  * Crea una nueva película

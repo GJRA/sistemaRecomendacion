@@ -117,9 +117,10 @@ int main(void) {
                 printf("Escribe el nombre de la pelicula para buscar su peliculas parecidas\n");
                 scanf(" %[^\n]s",nom);
                 Nodo *parecidas[3] = {NULL, NULL, NULL};
-                peliculasParecidas(peliculas, nom, parecidas);
-                printf("Parecidas:\n");
-                for(int i = 0; i <3; i++) printf("Pelicula: %s",parecidas[i]->nombre);
+                if(peliculasParecidas(peliculas, nom, parecidas)) {
+                  printf("Parecidas:\n");
+                  for(int i = 0; i <3; i++) printf("Pelicula: %s\n",parecidas[i]->nombre);
+                }
             break;
             case 13:
                 printCSV("base.csv", usuarios, peliculas, calificaciones);

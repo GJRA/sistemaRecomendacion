@@ -48,7 +48,7 @@ Nodo * recomendarAmigo(Nodo *headUsuarios,char *nombre){
   return amigoRecomendado;
 }
 
-void peliculasParecidas(Nodo *headPeliculas,char *nombre, Nodo *peliculasParecidas[]){
+int peliculasParecidas(Nodo *headPeliculas,char *nombre, Nodo *peliculasParecidas[]){
   Nodo * pelicula = searchInList(headPeliculas,nombre);
   if(pelicula!=NULL){
     int i = 0;
@@ -69,8 +69,10 @@ void peliculasParecidas(Nodo *headPeliculas,char *nombre, Nodo *peliculasParecid
       peliculasParecidas[i] = peliculaParecida;
       i++;
     } while(i <= 3);
+    return 1;
   }else{
     printf("La pelicula: %s no existe en la base de datos, sorry :(\n",nombre);
+    return 0;
   }
 }
 
