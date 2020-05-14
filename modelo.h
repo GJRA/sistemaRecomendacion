@@ -80,4 +80,15 @@ void setGetPromedio(float *val, Nodo * head);
 
 void entrenar(float *target, float *referencia, float rating, float learning_rate);
 
+
+void printNodeFile(FILE *fp, void *nodo, tipoDeNodo tipo);
+
+void printListaFile(FILE *fp, void *nodo, tipoDeNodo tipo);
+
+void printMatrizFile(FILE *fp, Nodo *usuarios, Nodo *peliculas, Calificacion *calificaciones, int reporte);
+
+int contains(Nodo *lista[], Nodo *nodo, int length);
+
+void promedioPeliculas(float *val, Nodo * array[], int length);
+
 #endif

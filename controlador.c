@@ -48,6 +48,32 @@ Nodo * recomendarAmigo(Nodo *headUsuarios,char *nombre){
   return amigoRecomendado;
 }
 
+void peliculasParecidas(Nodo *headPeliculas,char *nombre, Nodo *peliculasParecidas[]){
+  Nodo * pelicula = searchInList(headPeliculas,nombre);
+  if(pelicula!=NULL){
+    int i = 0;
+    do {
+      float max = 0.0,val=0.0;
+      Nodo * peliculaParecida = NULL;
+      Nodo * current = headPeliculas;
+      while(current != NULL){
+        if(strcmp(current->nombre,nombre) != 0){
+          val =productoPunto(pelicula->feature_values,current->feature_values);
+          if (val>max && !contains(peliculasParecidas, current, 3)){
+            peliculaParecida = current;
+            max=val;
+          }
+        }
+        current = current->next;
+      }
+      peliculasParecidas[i] = peliculaParecida;
+      i++;
+    } while(i <= 3);
+  }else{
+    printf("La pelicula: %s no existe en la base de datos, sorry :(\n",nombre);
+  }
+}
+
 Nodo * recomendarPelicula(Nodo *headPeliculas,Calificacion *headCalificacion,Nodo *headUsuarios, char *nombre){
   float max = 0.0,val=0.0;
   Nodo * peliRecomendada = NULL;
@@ -113,4 +139,50 @@ void entrenarSistema(char *nomFile, Calificacion * calificaciones) {
     // prevError = errorRms;
   // } while (errorRms > LIM_MIN && sameErrorCount < pow(USER_LEARNING, -1));
   } while (errorRms > LIM_MIN);
+}
+
+void printReporte(char *fileName, Nodo *usuarios, Nodo *peliculas, Calificacion *calificaciones) {
+  FILE *fp;
+  fp=fopen(fileName,"w+");
+  fprintf(fp, "REPORTE DEL PROGRAMA\n\n");
+  printListaFile(fp, usuarios, USUARIO);
+  fprintf(fp, "\n");
+  printListaFile(fp, peliculas, PELICULA);
+  fprintf(fp, "\n");
+  printMatrizFile(fp, usuarios, peliculas, calificaciones, 1);
+  fclose(fp);
+}
+
+void printCSV(char *fileName, Nodo *usuarios, Nodo *peliculas, Calificacion *calificaciones) {
+  FILE *fp;
+  fp=fopen(fileName,"w+");
+  printMatrizFile(fp, usuarios, peliculas, calificaciones, 0);
+  fclose(fp);
+}
+Nodo * agregarPelicula(char * nombre, Nodo * headPeliculas) {
+  Nodo * peliculasParecidas[5];
+  Nodo * elemento = malloc(sizeof(Nodo));
+  elemento->next = NULL;
+  strcpy(elemento->nombre, nombre);
+  elemento->id = headPeliculas == NULL ? 1 : getLastId(headPeliculas)+1;
+  int i = 0;
+  while (i < 5) {
+    Nodo *peliculas[2];
+    Nodo *peli;
+    do {
+      peli = randomMovie(headPeliculas);
+    } while(contains(peliculasParecidas, peli, 5));
+    peliculas[0] = peli;
+    do {
+      do {
+        peli = randomMovie(headPeliculas);
+      } while(contains(peliculasParecidas, peli, 5));
+      peliculas[1] = peli;
+    } while(peliculas[0]->nombre==peliculas[1]->nombre);
+    int opcion = askMovies(peliculas);
+    peliculasParecidas[i] = peliculas[opcion];
+    i++;
+  }
+  promedioPeliculas(elemento->feature_values, peliculasParecidas, 5);
+  return agregarALista(headPeliculas, elemento, PELICULA);
 }
