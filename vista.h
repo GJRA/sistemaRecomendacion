@@ -19,7 +19,7 @@
  *
  *
  */
-void menu();
+int menu();
 
 /**
  * Imprime las sugerencias de amigos de un usuario
