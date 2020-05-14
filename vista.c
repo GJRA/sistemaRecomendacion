@@ -63,39 +63,6 @@ void printProgress(int length, int counter, int bar) {
   fflush(stdout);
 }
 
-void printFeature(char *nombre,Nodo *headNodo){
-  char nombreFeatures[17][15] = {"Terror/Suspenso","Accion","Comedia","Dramatica",
-  "Musicales","Ciencia Ficcion","Guerra","Crimen","Infantil","Romance",
-  "Animada","Fantasia","Extranjera","Larga","Culto","Documental","Basada en Hechos"
-  };
-  Nodo *nodo = searchInList(headNodo, nombre);
-  printf("Features de %s\n",nodo->nombre);
-  for(int i=0;i<17;i++){
-    printf("%s -- > %f\n",nombreFeatures[i],nodo->feature_values[i]);
-  }
-}
-
-int menu(){
-  int opc = 0;
-  printf("\n\t\t\tSISTEMA DE RECOMENDACION NETFLIZ\t\t\t\n");
-  printf("Antes de usar este sistema se debe entrenar con un archivo csv\n");
-  printf("Debes escribir el numero de la opcion que quieres\n");
-  printf("\t1. Entrenar\n");
-  printf("\t2. Imprimir sugerencia de amigos\n");
-  printf("\t3. Imprimir sugerencia de peliculas para un usuario\n");
-  printf("\t4. Imprimir rating de las peliculas de un usuario\n");
-  printf("\t5. Imprimir los features de un pelicula\n");
-  printf("\t6. Imprimir los features de un usuario\n");
-  printf("\t7. Imprimir los ratings de todos los usuarios para una pelicula\n");
-  printf("\t8. Generar Reporte\n");
-  printf("\t9. Agregar nuevo usuario\n");
-  printf("\t10. Agregar nueva pelicula\n");
-  printf("\t11. Calificar pelicula\n");
-  printf("\t12. Imprimir pelicula parecida\n");
-  printf("\t13. Salir\n");
-  scanf(" %d", &opc);
-  return opc;
-}
 int askMovies(Nodo *peliculas[]) {
   int opcion;
   int valid = 1;;
@@ -108,7 +75,46 @@ int askMovies(Nodo *peliculas[]) {
     if(opcion > 1 || opcion < 0) {
       printf("Opcion invalida\n");
       valid = 0;
+    } else {
+      valid = 1;
     }
   } while(!valid);
   return opcion;
+}
+
+int menu(){
+  int opc = 0;
+  printf("\n\t\t\tSISTEMA DE RECOMENDACION NETFLIZ\t\t\t\n");
+  // printf("Antes de usar este sistema se debe entrenar con un archivo csv\n");
+  printf("Debes escribir el numero de la opcion que quieres\n");
+  printf("\t1. Entrenar\n");
+  printf("\t2. Imprimir sugerencia de amigos\n");
+  printf("\t3. Imprimir sugerencia de peliculas para un usuario\n");
+  printf("\t4. Imprimir rating de las peliculas de un usuario\n");
+  printf("\t5. Imprimir los features de una pelicula\n");
+  printf("\t6. Imprimir los features de un usuario\n");
+  printf("\t7. Imprimir los ratings de todos los usuarios para una pelicula\n");
+  printf("\t8. Generar Reporte\n");
+  printf("\t9. Agregar nuevo usuario\n");
+  printf("\t10. Agregar nueva pelicula\n");
+  printf("\t11. Calificar pelicula\n");
+  printf("\t12. Imprimir pelicula parecida\n");
+  printf("\t13. Salir\n");
+  printf("Opcion: ");
+  scanf(" %d", &opc);
+  return opc;
+}
+
+void imprimirCalificaciones(Calificacion * calificaciones, Nodo * nodo, tipoDeNodo tipo) {
+  Calificacion * temp = malloc(sizeof(Calificacion));
+  Calificacion * current = calificaciones;
+  temp -> usuario = nodo;
+  temp -> pelicula = nodo;
+  char *str = tipo == USUARIO ? "Usuario:\0" : "Pelicula:\0";
+  printf("%s: %s\n", str, nodo->nombre);
+  while (current != NULL) {
+    if(tipo == USUARIO && temp->usuario == current->usuario) printf("\tPelicula: %s\n\t\tRating: %d\n\n", current->pelicula->nombre, (int) round(current->rating*10));
+    if(tipo == PELICULA && temp->pelicula == current->pelicula) printf("\tUsuario: %s\n\t\tRating: %d\n\n", current->usuario->nombre,(int) round(current->rating*10));
+    current = current->next;
+  }
 }

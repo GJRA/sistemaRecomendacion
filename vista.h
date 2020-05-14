@@ -112,4 +112,12 @@ void printProgress(int length, int counter, int bar);
  * @return la posición de la película elegida
  */
 int askMovies(Nodo *peliculas[]);
+/**
+ * Imprime todos los ratings de un usuario o de una película
+ *
+ * @param calificaciones lista de calificaciones
+ * @param nodo el nodo del que imprimir los ratings
+ * @param tipo el tipo de nodo del que imprimir los ratings
+ */
+void imprimirCalificaciones(Calificacion * calificaciones, Nodo * nodo, tipoDeNodo tipo);
 #endif

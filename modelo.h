@@ -242,4 +242,10 @@ int contains(Nodo *lista[], Nodo *nodo, int length);
  */
 void promedioPeliculas(float *val, Nodo * array[], int length);
 
+/**
+ * Limpia una lista (elimina \n al final de los nombres)
+ *
+ * @param lista la lista que se desea limpiar
+ */
+void limpiar(Nodo *lista);
 #endif

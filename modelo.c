@@ -125,7 +125,9 @@ Calificacion * agregarCalificacion(Calificacion * head, Calificacion * elemento)
     current = (Calificacion *)getLast(head, CALIFICACION);
     current->next = elemento;
   } else {
+    // printf("UPDATE to %f\n", elemento->rating);
     update->rating = elemento->rating;
+    // printf("POST UPDATE: %f\n", elemento->rating);
   }
   return head;
 }
@@ -208,6 +210,7 @@ void * getByPosition(void * head, int pos, tipoDeNodo tipo) {
 
 Calificacion * calificaPelicula(Nodo * usuario, Nodo * pelicula, float rating, Calificacion * calificaciones) {
   Calificacion *elemCali = malloc (sizeof (Calificacion));
+  // printf("En califica %f\n", rating);
   if(elemCali == NULL) printf("ERROR crear calificacion\n");
   elemCali -> usuario = usuario;
   elemCali -> pelicula = pelicula;
@@ -286,6 +289,7 @@ void printMatrizFile(FILE *fp, Nodo *usuarios, Nodo *peliculas, Calificacion *ca
     fprintf(fp, "| ID |");
     Nodo *current = usuarios;
     while (current != NULL) {
+      if(current->nombre[strlen(current->nombre)-1] == '\n') current->nombre[strlen(current->nombre)-1] = '\0';
       fprintf(fp, "| %2d ", current->id);
       current = current->next;
     }
@@ -301,7 +305,7 @@ void printMatrizFile(FILE *fp, Nodo *usuarios, Nodo *peliculas, Calificacion *ca
         elemento->usuario = currentUser;
         elemento->pelicula = current;
         Calificacion *calif = getCalificacion(calificaciones, elemento);
-        int rating = calif == NULL ? -1 : (calif->rating)*10;
+        int rating = calif == NULL ? -1 : (int) round(calif->rating*10);
         fprintf(fp, "| %2d ", rating);
         currentUser = currentUser->next;
         free(elemento);
@@ -315,7 +319,8 @@ void printMatrizFile(FILE *fp, Nodo *usuarios, Nodo *peliculas, Calificacion *ca
     fprintf(fp, "Nombre Pelicula");
     Nodo *current = usuarios;
     while (current != NULL) {
-      fprintf(fp, ",%s ", current->nombre);
+      if(current->nombre[strlen(current->nombre)-1] == '\n') current->nombre[strlen(current->nombre)-1] = '\0';
+      fprintf(fp, ",%s", current->nombre);
       current = current->next;
     }
     fprintf(fp, "\n");
@@ -328,8 +333,8 @@ void printMatrizFile(FILE *fp, Nodo *usuarios, Nodo *peliculas, Calificacion *ca
         elemento->usuario = currentUser;
         elemento->pelicula = current;
         Calificacion *calif = getCalificacion(calificaciones, elemento);
-        int rating = calif == NULL ? -1 : (calif->rating)*10;
-        fprintf(fp, ",%d ", rating);
+        int rating = calif == NULL ? -1 : (int) round(calif->rating*10);
+        fprintf(fp, ",%d", rating);
         currentUser = currentUser->next;
         free(elemento);
       }
@@ -393,5 +398,13 @@ void promedioPeliculas(float *val, Nodo * array[], int length) {
       sum += array[j]->feature_values[i];
     }
     val[i] = sum/length;
+  }
+}
+
+void limpiar(Nodo *lista) {
+  Nodo *current = lista;
+  while (current != NULL) {
+    if(current->nombre[strlen(current->nombre)-1] == '\n') current->nombre[strlen(current->nombre)-1] = '\0';
+    current = current->next;
   }
 }
